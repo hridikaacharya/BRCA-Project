@@ -1,0 +1,13 @@
+data/IntegratedAtlas.h5ad
+data/wu_spatial/
+data/raw/
+data/raw_sra/
+
+*.h5ad
+*.h5
+*.sra
+*.fastq
+*.bam
+
+__pycache__/
+.ipynb_checkpoints/

@@ -1,0 +1,3 @@
+conda activate brca
+cd "C:\BRCA\BRCA_Project"
+jupyter lab
