@@ -1,0 +1,11 @@
+,random_init_mean_cos,random_init_min_cos,subsample80_mean_cos,subsample80_min_cos
+Program_0,0.997,0.946,0.916,0.064
+Program_1,0.985,0.975,0.978,0.956
+Program_2,0.967,0.881,0.85,0.126
+Program_3,0.96,0.897,0.945,0.732
+Program_4,0.804,0.116,0.856,0.661
+Program_5,0.995,0.951,0.903,0.105
+Program_6,0.962,0.894,0.93,0.071
+Program_7,0.811,0.109,0.733,0.121
+Program_8,0.962,0.09,0.807,0.088
+Program_9,0.986,0.947,0.967,0.813

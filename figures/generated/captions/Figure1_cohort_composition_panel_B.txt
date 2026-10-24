@@ -1,0 +1,1 @@
+Figure 1. Cohort composition in the integrated single-cell atlas. Panel A shows cell counts by source study/batch; panel B shows cell counts by the atlas's recorded disease label. Counts are cells, not independent patients. Disease labels and cell numbers vary across source studies, so study composition must be considered when interpreting downstream associations.

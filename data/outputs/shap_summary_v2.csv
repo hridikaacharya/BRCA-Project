@@ -1,0 +1,5 @@
+program,top20_overlap_with_NMF_top20,spearman_shap_vs_NMF_weight,top20_fold_jaccard_mean,top20_fold_jaccard_min
+Program_1,10,0.342,0.653,0.6
+Program_3,7,0.344,0.532,0.429
+Program_6,7,0.33,0.7,0.538
+Program_9,6,0.322,0.571,0.429
