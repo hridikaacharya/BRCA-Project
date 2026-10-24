@@ -1,273 +1,95 @@
-# BRCA Project
+# Interpretable Single-Cell Analysis of Breast Cancer Cell–Cell Signaling
 
 ## Overview
 
-This repository contains the analysis pipeline for a study of patient level cell–cell communication in breast cancer.
+In this project, I investigated cell-cell signaling patterns in breast cancer using single-cell RNA sequencing data. Analysis combined ligand–receptor features, patient level analysis, non-negative matrix factorization (NMF), and explainable machine learning to examine patterns of signaling activity and their relationship with tumor characteristics.
 
-The project uses an integrated single cell RNA-seq atlas to identify recurrent communication programs, characterize their biological properties, and interpret them using surrogate machine learning models and SHAP. The final stage of the project will evaluate these findings using independent spatial transcriptomic data.
+The analysis identified signaling programs that occur consistently across patients and investigated which features contribute to those programs and their computational prediction.
 
----
+## Research questions
 
-## Research Question
+What recurring programs of ligand–receptor expression features can be identified across patients with breast cancer?
 
-Can latent communication programs be identified from patient specific ligand receptor interactions, and can those programs be interpreted in terms of the signaling events that define them?
+How do the activity scores of the identified programs vary across available tumor characteristics and clinical categories, and how robust are these associations across the eight studies contributing to the atlas?
 
----
+How accurately can interpretable surrogate models(XGBoost, LightGBM, Random Foresst, Extra Trees) reproduce NMF derived program scores in patients, and which ligand receptor features contribute most to their predictions, assessed using SHAP?
 
-## Dataset
+## Data
 
-Primary dataset
+We used Integrated Breast Cancer Atlas by Chen et al.(2026) This is a published single-cell RNA-sequencing atlas of human breast cancer. The atlas contains 621,200 cells from 138 patients with untreated primary tumors, assembled from eight studies.
 
-* Integrated Breast Cancer Atlas
-* 138 patients
-* around 621,000 cells
-* Multiple breast cancer subtypes
-* Patient level clinical metadata
+Primary publication: Chen et al. (2026), A highly resolved integrated single-cell atlas of human breast cancers. 
 
-Large input datasets are excluded from this repository because of their size.
+Dataset access: CELLxGENE collection
+Atlas publication: https://doi.org/10.1093/nargab/lqaf217
+Atlas authors' code: https://github.com/montilab/chen_et_al_brca_atlas?utm_source=chatgpt.com
 
----
+The primary input for my study is IntegratedAtlas.h5ad which contains the integrated single-cell expression matrix and the cell level metadata associated with it. I used supplemental files to connect donor identifiers with available clinical and tumour annotations.
 
-## Analysis Workflow
+i derived pateint-level ligand receptor expression features from the single cell data and used these features for a non-negative matrix factorization (NMF), program characterization, and exploratory analyses of associations with available tumor characteristics.
 
-```
-Integrated atlas
-    ↓
-Cell–cell communication inference
-    ↓
-Patient × ligand to receptor matrix
-    ↓
-Network weighting
-    ↓
-Non negative Matrix Factorization
-    ↓
-Communication programs
-    ↓
-Program validation
-    ↓
-Biological characterization
-    ↓
-Surrogate machine learning models
-    ↓
-SHAP interpretation
-    ↓
-Prioritization of ligand to receptor interactions
-    ↓
-Spatial validation
-```
+The original dataset source file is not included in not available in this repository. Users must obtain the source data separately and follow the directory structure to reproduce the results. The tables and figures in this repository are the computational outputs of the project which were not a part of the original atlas. 
 
----
+## Methods
 
-# Repository Structure
+The analysis pipeline includes:
 
-```
-BRCA Project/
+1. **Dataset exploration and metadata integration** Examine the atlas, patient annotations, and study level metadata.
+2. **Ligand receptor feature construction** Derive patient level features from cell population abundance and ligand receptor information.
+3. **Feature weighting and filtering** Construct an abundance weighted representation and remove features with zero variance where appropriate.
+4. **Signaling program discovery** Apply NMF to identify recurring patterns in the patient level feature matrix.
+5. **Program characterization** Examine associations between the resulting programs and tumor characteristics.
+6. **Explainable machine learning** Train surrogate models to approximate program scores or assignments and investigate feature contributions.
+7. **Evaluation and sensitivity analysis** Assess model performance, program stability, and potential sources of confounding.
 
-data/
-    outputs/
-    supplementary/
+The abundance weighted features represent estimated signaling capacity based on the expression derived ligand receptor features and cell population abundance. They are not direct measurements of physical interactions, directional communication, or functional signaling.
 
-notebooks/
+## Repository structure
 
-figures/
+| Directory | Contents |
+|---|---|
+| `notebooks/` | Exploratory analysis and analysis workflow |
+| `data/` | Data files and intermediate analysis outputs |
+| `figures/` | Generated figures and visualizations |
+| `scripts/` | Standalone analysis and utility scripts |
+| `results/` | Empty for now|
 
-README.md
-requirements.txt
-```
 
-Large datasets (`.h5ad`, spatial data, raw sequencing files) are ignored using `.gitignore`.
+## Reproducibility
 
----
+Reproduction instructions are still being finalized.
 
-# Notebook Guide
+They will specify:
 
-## Notebooks 1–10
+- The Python version and required packages.
+- How to obtain the source data.
+- The order in which notebooks and scripts should be run.
+- Which intermediate files are generated at each stage.
+- Any computational or memory requirements.
 
-These notebooks prepare the data used throughout the project.
 
-Tasks include:
+## Limitations
 
-* loading the integrated atlas
-* preprocessing
-* communication inference
-* construction of patient-level communication matrices
-* network weighting
-* export of intermediate datasets
+This is an exploratory computational analysis. Any associations found between signaling programs and tumor characteristics do not establish causal relationship.
 
-Main outputs:
+Model performance on derived program scores also does not establish clinical predictive validity.
 
-* communication matrix
-* weighted communication matrix
+The current analysis does not include validated patient survival or recurrence outcomes. Therefore, the results should not be interpreted as a validated breast cancer prognostic model.
 
----
+## References
 
-## Notebook 11: Communication Program Discovery
+1. Chen, A., Kroehling, L., Ennis, C. S., Denis, G. V., & Monti, S. (2026). A highly resolved integrated single-cell atlas of human breast cancers. *NAR Genomics and Bioinformatics, 8*(1), lqaf217. https://doi.org/10.1093/nargab/lqaf217
 
-Purpose
+2. Dimitrov, D., Schäfer, P. S. L., Farr, E., Rodriguez-Mier, P., Lobentanzer, S., Badia-i-Mompel, P., Dugourd, A., Tanevski, J., Ramirez Flores, R. O., & Saez-Rodriguez, J. (2024). LIANA+ provides an all-in-one framework for cell–cell communication inference. *Nature Cell Biology, 26*, 1613–1622. https://doi.org/10.1038/s41556-024-01469-w
 
-Identify recurrent communication programs shared across patients.
+3. Lee, D. D., & Seung, H. S. (1999). Learning the parts of objects by non-negative matrix factorization. *Nature, 401*, 788–791. https://doi.org/10.1038/44565
 
-Methods
+4. Lundberg, S. M., & Lee, S.-I. (2017). A unified approach to interpreting model predictions. In *Advances in Neural Information Processing Systems 30* (pp. 4765–4774). https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions
 
-* feature filtering
-* MinMax scaling
-* Non negative Matrix Factorization (NMF)
+5. Virshup, I., Rybakov, S., Theis, F. J., Angerer, P., & Wolf, F. A. (2024). anndata: Access and store annotated data matrices. *Journal of Open Source Software, 9*(101), 4371. https://doi.org/10.21105/joss.04371
 
-Outputs
+6. Wolf, F. A., Angerer, P., & Theis, F. J. (2018). SCANPY: large scale single-cell gene expression data analysis. *Genome Biology, 19*, 15. https://doi.org/10.1186/s13059-017-1382-0
 
-* patient program scores
-* program feature weights
+## Project status
 
-Additional analyses
-
-* reconstruction error
-* stability across random seeds
-* cosine similarity
-
-Result
-
-Repeated NMF runs converged to the same solution under different random seeds, indicating stable communication programs.
-
----
-
-## Notebook 12: Program Validation
-
-Purpose
-
-Evaluate the robustness of the NMF decomposition.
-
-Analyses
-
-* reconstruction error across different values of *k*
-* elbow analysis
-* stability across repeated runs
-* feature overlap
-* sparsity of program weights
-* PCA of patient program activities
-* correlation between communication programs
-
-Outputs
-
-* validated patient program matrix
-* validated program feature matrix
-
----
-
-## Notebook 13: Biological Characterization
-
-Purpose
-
-Determine whether communication programs are associated with disease groups.
-
-Methods
-
-* Kruskal Wallis test
-* Benjamini Hochberg FDR correction
-* eta-squared effect size
-
-Outputs
-
-* program disease association table
-
-This notebook is intended as biological characterization rather than predictive modelling.
-
----
-
-## Notebook 14: Surrogate Models
-
-Purpose
-
-Evaluate whether communication programs can be approximated by supervised models and interpreted with SHAP.
-
-Models evaluated
-
-* Random Forest
-* Extra Trees
-* XGBoost
-* LightGBM
-
-Evaluation metrics
-
-* R²
-* RMSE
-* MAE
-* cross validation
-
-Current observations
-
-* XGBoost achieved the highest average performance across communication programs.
-* Several programs were reconstructed with high fidelity.
-* Other programs remained difficult to model, suggesting differences in complexity or signal strength.
-
-SHAP values were computed using the best-performing model for each communication program.
-
-Outputs
-
-* model comparison
-* program specific model performance
-* SHAP importance scores
-
----
-
-## Notebook 15
-
-Current status: in progress
-
-Planned analyses
-
-* combine NMF weights with SHAP importance
-* identify ligand to receptor interactions supported by both approaches
-* compare programs
-* prepare candidate interactions for downstream validation
-
----
-
-## Planned Work
-
-* spatial transcriptomic validation
-* pathway enrichment
-* network visualization
-* manuscript figures
-* manuscript preparation
-
----
-
-# Software
-
-Python packages used in this project include
-
-* Scanpy
-* NumPy
-* Pandas
-* SciPy
-* scikit-learn
-* XGBoost
-* LightGBM
-* SHAP
-* Matplotlib
-
-Package versions are listed in `requirements.txt`.
-
----
-
-# Current Status
-
-Completed
-
-* communication inference
-* patient communication matrix
-* communication program discovery
-* program validation
-* biological characterization
-* surrogate modelling
-* SHAP analysis
-
-In progress
-
-* integrated prioritization of ligand–receptor interactions
-
-Planned
-
-* spatial validation
-* manuscript figures
-* publication
+Analysis, quality control, and repository preparation are ongoing. Methods, results, and reproduction instructions will be updated as the workflow is audited.
