@@ -16,17 +16,17 @@ How accurately can interpretable surrogate models(XGBoost, LightGBM, Random Fore
 
 ## Data
 
-We used Integrated Breast Cancer Atlas by Chen et al.(2026) This is a published single-cell RNA-sequencing atlas of human breast cancer. The atlas contains 621,200 cells from 138 patients with untreated primary tumors, assembled from eight studies.
+I used Integrated Breast Cancer Atlas by Chen et al.(2026) This is a published single-cell RNA-sequencing atlas of human breast cancer. The atlas contains 621,200 cells from 138 patients with untreated primary tumors, assembled from eight studies.
 
 Primary publication: Chen et al. (2026), A highly resolved integrated single-cell atlas of human breast cancers. 
 
 Dataset access: CELLxGENE collection
 Atlas publication: https://doi.org/10.1093/nargab/lqaf217
-Atlas authors' code: https://github.com/montilab/chen_et_al_brca_atlas?utm_source=chatgpt.com
+Atlas authors' code: https://github.com/montilab/chen_et_al_brca_atlas
 
 The primary input for my study is IntegratedAtlas.h5ad which contains the integrated single-cell expression matrix and the cell level metadata associated with it. I used supplemental files to connect donor identifiers with available clinical and tumour annotations.
 
-i derived pateint-level ligand receptor expression features from the single cell data and used these features for a non-negative matrix factorization (NMF), program characterization, and exploratory analyses of associations with available tumor characteristics.
+I derived pateint-level ligand receptor expression features from the single cell data and used these features for a non-negative matrix factorization (NMF), program characterization, and exploratory analyses of associations with available tumor characteristics.
 
 The original dataset source file is not included in not available in this repository. Users must obtain the source data separately and follow the directory structure to reproduce the results. The tables and figures in this repository are the computational outputs of the project which were not a part of the original atlas. 
 
