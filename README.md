@@ -52,7 +52,7 @@ The abundance weighted features represent estimated signaling capacity based on 
 | `data/` | Data files and intermediate analysis outputs |
 | `figures/` | Generated figures and visualizations |
 | `scripts/` | Standalone analysis and utility scripts |
-| `results/` | Empty for now|
+| `results/` | ---|
 
 
 ## Reproducibility
