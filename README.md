@@ -1,4 +1,4 @@
-# Interpretable Single-Cell Analysis of Breast Cancer Cell–Cell Signaling
+# Patient-Level Expression Programs in Human Breast Cancer: NMF Decomposition and Stability Assessment 
 
 ## Overview
 
