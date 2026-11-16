@@ -23,7 +23,7 @@ import pandas as pd
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT = Path(__file__).resolve().parents
+ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "outputs"
 FIGROOT = ROOT / "figures" / "generated"
 PANELS = FIGROOT / "individual"
