@@ -1,6 +1,6 @@
 """
 BRCA exploratory figure generator
-Project root: C:\\BRCA\\BRCA Project
+Project root: dynamic (relative to script)
 
 Reads existing project outputs and creates figures/reports under:
     figures/generated/
@@ -11,20 +11,19 @@ until independently reproduced from patient-level metadata and program scores.
 
 from __future__ import annotations
 
-import json
 import hashlib
-import warnings
+import json
 from datetime import datetime
 from pathlib import Path
 
+import matplotlib
 import numpy as np
 import pandas as pd
-import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 
-ROOT = Path(r"C:\BRCA\BRCA Project")
+ROOT = Path(__file__).resolve().parents
 OUT = ROOT / "data" / "outputs"
 FIGROOT = ROOT / "figures" / "generated"
 PANELS = FIGROOT / "individual"

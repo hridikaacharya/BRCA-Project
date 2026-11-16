@@ -1,9 +1,12 @@
 # Phase 1c: TreeSHAP on the surrogate models, restricted to programs that passed BOTH criteria:
 #   (1) factor reproducible across random inits / subsamples, (2) surrogate CV R2 consistently high.
 # Requires: pip install shap
-import json, warnings
+import json
+import warnings
+
 warnings.filterwarnings("ignore")
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import shap

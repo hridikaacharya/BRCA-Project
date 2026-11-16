@@ -4,21 +4,23 @@
 # All new files get a "_v2" suffix so nothing from the earlier run is overwritten.
 
 # %% [Cell 0] Imports and paths  -- EDIT ATLAS and STUDY_COL
-import json, warnings
+import json
+import warnings
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
-from sklearn.decomposition import NMF
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.model_selection import train_test_split, KFold
-from sklearn.metrics import r2_score
-from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
 from scipy.optimize import linear_sum_assignment
 from scipy.stats import kruskal, rankdata
+from sklearn.decomposition import NMF
+from sklearn.ensemble import ExtraTreesRegressor, RandomForestRegressor
+from sklearn.metrics import r2_score
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.model_selection import KFold, train_test_split
+from sklearn.preprocessing import MinMaxScaler
 from statsmodels.stats.multitest import multipletests
-import statsmodels.formula.api as smf
-import statsmodels.api as sm
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -90,6 +92,7 @@ stab.to_csv(OUT / "nmf_stability_v2.csv")
 
 # %% [Cell 4] Patient labels from the atlas (obs only; does not load expression into memory)
 import anndata as ad
+
 adata = ad.read_h5ad(ATLAS, backed="r")
 obs = adata.obs[["donor_id", "disease", STUDY_COL]].copy()
 mode = lambda s: s.astype(str).mode().iloc[0]
@@ -131,7 +134,7 @@ for p in prog_cols:
         adj_rows.append({"program": p,
                          "p_disease_adj_study": tab.loc["C(disease)", "PR(>F)"],
                          "p_study": tab.loc["C(study)", "PR(>F)"]})
-    except Exception as e:
+    except Exception:
         adj_rows.append({"program": p, "p_disease_adj_study": np.nan, "p_study": np.nan})
 adj = pd.DataFrame(adj_rows)
 adj["FDR_disease_adj"] = multipletests(adj["p_disease_adj_study"].fillna(1), method="fdr_bh")[1]
@@ -180,7 +183,8 @@ cv_df.to_csv(OUT / "surrogate_cv_r2_v2.csv")
 # Decide which programs count as "high fidelity" from CV mean AND sd, not from the holdout alone.
 
 # %% [Cell 8] Software versions for the Methods section
-import sys, sklearn, xgboost, scipy, statsmodels
+import sys
+
 print("python", sys.version.split()[0])
 for mod in ["numpy", "pandas", "scipy", "sklearn", "xgboost", "statsmodels", "scanpy", "anndata", "liana", "shap"]:
     try:

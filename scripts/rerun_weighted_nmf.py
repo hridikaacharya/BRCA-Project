@@ -1,6 +1,7 @@
 
-from pathlib import Path
 import json
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 from sklearn.decomposition import NMF
@@ -112,7 +113,7 @@ metadata = {
     "input_file": str(INPUT),
     "n_patients": int(X_df.shape[0]),
     "n_features_retained": int(X_df.shape[1]),
-    "n_features_removed": int(len(removed)),
+    "n_features_removed": len(removed),
     "n_components": 10,
     "init": "nndsvda",
     "solver": "cd",

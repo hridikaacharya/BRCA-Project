@@ -2,16 +2,18 @@
 # so it runs in seconds. Fixes the bug where empty categorical levels turned every Kruskal-Wallis into NaN.
 # EDIT the ATLAS and STUDY_COL lines to match what you used in phase1_rerun_cells.py.
 import warnings
+
 warnings.filterwarnings("ignore")
-from pathlib import Path
 from itertools import combinations
+from pathlib import Path
+
+import anndata as ad
 import numpy as np
 import pandas as pd
-import anndata as ad
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
 from scipy.stats import kruskal, mannwhitneyu, rankdata
 from statsmodels.stats.multitest import multipletests
-import statsmodels.formula.api as smf
-import statsmodels.api as sm
 
 pd.set_option("display.width", 250)
 pd.set_option("display.max_columns", 50)

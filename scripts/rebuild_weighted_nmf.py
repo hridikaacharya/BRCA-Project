@@ -1,14 +1,14 @@
 
-from pathlib import Path
-from datetime import datetime, timezone
 import json
 import warnings
+from datetime import UTC, datetime
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import sklearn
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.decomposition import NMF
+from sklearn.preprocessing import MinMaxScaler
 
 # --------------------------------------------------
 # Configuration
@@ -123,12 +123,12 @@ pd.DataFrame({
 }).to_csv(FEATURES_PATH, index=False)
 
 report = {
-    "run_utc": datetime.now(timezone.utc).isoformat(),
+    "run_utc": datetime.now(UTC).isoformat(),
     "input_file": str(INPUT.relative_to(ROOT)),
     "input_shape": list(X_df.shape),
-    "original_input_shape": list(X_df.shape[:1]) + [int(len(keep))],
+    "original_input_shape": list(X_df.shape[:1]) + [len(keep)],
     "patients": int(X_df.shape[0]),
-    "features_before_filtering": int(len(keep)),
+    "features_before_filtering": len(keep),
     "features_removed_zero_variance": int((~keep).sum()),
     "features_retained": int(X_df.shape[1]),
     "preprocessing": (

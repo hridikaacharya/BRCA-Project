@@ -1,13 +1,13 @@
 
-from pathlib import Path
 from itertools import combinations
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from sklearn.decomposition import NMF
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics.pairwise import cosine_similarity
 from scipy.optimize import linear_sum_assignment
+from sklearn.decomposition import NMF
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.preprocessing import MinMaxScaler
 
 OUT = Path("data/outputs")
 INPUT = OUT / "weighted_matrix_3465.csv"
